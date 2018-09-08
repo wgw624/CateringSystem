@@ -1,3 +1,7 @@
-.bgColor{
-  background-color: red;
+.headMenuDiv{
+  text-align: left;
+  padding-left:30px;
+}
+.headMenu{
+  margin-left:10px;
 }

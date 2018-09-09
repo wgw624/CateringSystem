@@ -1,8 +1,14 @@
 const path = require("path");
 module.exports={
   context:__dirname+"/src/js",
-  entry:'./index.js',
+  entry:'./root.js',
   mode:'development', //'production',
+  devServer:{
+    // contentBase: path.join(__dirname, 'index.html'),
+    // compress: true,
+    // open:true,
+    port: 8090
+  },
   module: {
     rules: [
       {

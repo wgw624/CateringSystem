@@ -17,7 +17,7 @@ export default class ComponentHead extends React.Component{
                 <a rel="noopener noreferrer" href="#" onClick={this.changeBodyContent.bind(this)} >改变body内容</a>
               </Menu.Item>
               <SubMenu title="sub menu">
-                <Menu.Item>3rd menu item</Menu.Item>
+                <Menu.Item>3rd menu item4444</Menu.Item>
                 <Menu.Item>4th menu item</Menu.Item>
               </SubMenu>
               <Menu.Item>

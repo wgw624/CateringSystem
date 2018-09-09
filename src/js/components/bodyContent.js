@@ -7,7 +7,7 @@ export default class BodyContent extends React.Component{
   render(){
     return(
       <div>
-        <ContentData ref='contData' />
+        <ContentData ref='contData' bodyData ='Good morning!!!' />
       </div>
     )
   }

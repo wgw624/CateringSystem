@@ -3,7 +3,7 @@ import ReactDom from 'react-dom';
 import ComponentHead from './components/head.js';
 import BodyContent from './components/bodyContent';
 
-class Index extends React.Component{
+export default class Index extends React.Component{
   render(){
     return(
       <div>
@@ -14,8 +14,3 @@ class Index extends React.Component{
 
   }
 }
-
-ReactDom.render(
-  <Index />,
-  document.getElementById("root1")
-)

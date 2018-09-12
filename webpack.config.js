@@ -4,7 +4,7 @@ module.exports={
   entry:'./root.js',
   mode:'development', //'production',
   devServer:{
-    // contentBase: path.join(__dirname, 'index.html'),
+    // contentBase: 'dist/',
     // compress: true,
     // open:true,
     port: 8090

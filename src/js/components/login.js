@@ -24,7 +24,7 @@ export default class Login extends React.Component{
     })
   }
   handleSubmit(e){
-    alert('A name was submitted: ' + this.state.value);
+    alert('A name was submitted: ' + this.state.username+this.state.psd);
     e.preventDefault();
   }
 

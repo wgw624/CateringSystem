@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Form,Icon, Input, Button, Checkbox } from 'antd';
+import {Redirect} from 'react-router-dom';
 export default class Login extends React.Component{
   constructor(props){
     super(props);
@@ -24,8 +25,12 @@ export default class Login extends React.Component{
     })
   }
   handleSubmit(e){
-    alert('A name was submitted: ' + this.state.username+this.state.psd);
-    e.preventDefault();
+    // alert('A name was submitted: ' + this.state.username+this.state.psd);
+    // e.preventDefault();
+    // return (<Redirect to="/index" />);
+     // this.context.router.history.push('/index');
+     this.props.history.push('/index')
+
   }
 
   render(){

@@ -5,7 +5,8 @@ import { Menu, Dropdown, Button,Row,Col,Icon  } from 'antd';
 import {Link} from 'react-router-dom';
 
 //var HeadCss = require("../../css/headCss.css");
-
+const SubMenu = Menu.SubMenu;
+const MenuItemGroup = Menu.ItemGroup;
 export default class PCHeader extends React.Component{
   state={
     current:'singleWork'
@@ -30,15 +31,27 @@ export default class PCHeader extends React.Component{
           </Col>
           <Col span={18}>
             <Menu onClick={this.handleClick} selectedKeys={[this.state.current]}  mode="horizontal">
-              <Menu.Item key="singleWork" >
-                <Icon type="appstore" />个人工作台
-              </Menu.Item>
-              <Menu.Item key="myIncoming" >
-                <Icon type="appstore" />我得收文
-              </Menu.Item>
-              <Menu.Item key="myOutgoing" >
-                <Icon type="appstore" />我得发文
-              </Menu.Item>
+
+              <SubMenu title={<span><Icon type="appstore"  /><Link to={'/index'}>个人工作台</Link></span>}>
+                 <MenuItemGroup title="Item 1">
+                   <Menu.Item key="setting:1">Option 1</Menu.Item>
+                   <Menu.Item key="setting:2">Option 2</Menu.Item>
+                 </MenuItemGroup>
+                 <MenuItemGroup title="Item 2">
+                   <Menu.Item key="setting:3">Option 3</Menu.Item>
+                   <Menu.Item key="setting:4">Option 4</Menu.Item>
+                 </MenuItemGroup>
+               </SubMenu>
+               <SubMenu title={<span><Icon type="appstore"  /><Link to={'/list'}>我的收文</Link></span>}>
+                  <MenuItemGroup title="Item 1">
+                    <Menu.Item key="setting:1">Option 1</Menu.Item>
+                    <Menu.Item key="setting:2">Option 2</Menu.Item>
+                  </MenuItemGroup>
+                  <MenuItemGroup title="Item 2">
+                    <Menu.Item key="setting:3">Option 3</Menu.Item>
+                    <Menu.Item key="setting:4">Option 4</Menu.Item>
+                  </MenuItemGroup>
+                </SubMenu>
               <Menu.Item key="businessManage" >
                 <Icon type="appstore" />业务管理
               </Menu.Item>

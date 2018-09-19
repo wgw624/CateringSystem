@@ -7,8 +7,7 @@ export default class Index extends React.Component{
   render(){
     return(
       <div>
-        <PCHeader />
-        <PCFooter />
+        Hello first pages!!!
       </div>
     )
   }

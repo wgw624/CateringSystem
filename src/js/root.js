@@ -6,22 +6,28 @@ import PCHeader from './components/pc_head';
 import PCFooter from './components/pc_footer';
 import Login from './components/login';
 
-import { BrowserRouter as Router, Route,Link,Redirect } from 'react-router-dom';
+import { BrowserRouter, Route,Link,Redirect,Switch } from 'react-router-dom';
 
 class Root extends React.Component{
+  constructor(props){
+    super(props);
+    this.state={
+      isLogin:false,
+    };
+  }
+
   render(){
     return(
       <div>
-        <Router>
+        <BrowserRouter isLogin={this.state.isLogin}>
           <div>
-            <PCHeader />
-            <Route path="/" exact component={Login}></Route>
-            <Route path="/index" exact component={Index}></Route>
-            <Route path="/list" component={List}></Route>
-            <Redirect path="/" component={List}></Redirect>
-            <PCFooter />
+            <Switch>
+              <Route path="/" exact component={Login}></Route>
+              <Route path="/index" exact component={Index}></Route>
+              <Redirect path="/" component={Login}></Redirect>
+            </Switch>
           </div>
-        </Router>
+        </BrowserRouter>
 
       </div>
     )

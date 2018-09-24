@@ -7,7 +7,8 @@ module.exports={
     // contentBase: 'dist/',
     // compress: true,
     // open:true,
-    port: 8090
+    port: 8090,
+    historyApiFallback:true
   },
   module: {
     rules: [

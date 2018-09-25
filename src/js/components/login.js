@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Form,Icon, Input, Button, Checkbox } from 'antd';
 import {Redirect} from 'react-router-dom';
+import LoginCss from '../../css/pc_login.css';
 export default class Login extends React.Component{
   constructor(props){
     super(props);
@@ -35,18 +36,25 @@ export default class Login extends React.Component{
 
   render(){
     return(
-      <div>
-        <form onSubmit={this.handleSubmit}>
-        <label>
-          用户名:
-          <input type="text" value={this.state.value} onChange={this.handleUsername} />
-        </label>
-        <label>
-          密码:
-          <input type="password" value={this.state.psd} onChange={this.handlePassword} />
-        </label>
-        <input type="submit" value="Submit" />
-        </form>
+      <div class={LoginCss.loginDiv}>
+        <div class={LoginCss.loginForm}>
+          <h1 className={LoginCss.loginH1}>Login</h1>
+          <form onSubmit={this.handleSubmit}>
+          <div className={LoginCss.logInpDiv}>
+            <input type="text" value={this.state.value} onChange={this.handleUsername} placeholder="用户名" className={LoginCss.loginInp} />
+          </div>
+          <div className={LoginCss.logInpDiv}>
+            <input className={LoginCss.loginInp}  type="password" value={this.state.psd} onChange={this.handlePassword} placeholder="密码" />
+          </div>
+          <div className={LoginCss.logInpDiv}>
+            <Checkbox className={LoginCss.loginCheck}>记住密码</Checkbox>
+          </div>
+          <div>
+            <input type="submit" value="Submit" className={LoginCss.submitBtn} />
+          </div>
+
+          </form>
+        </div>
       </div>
     )
   }

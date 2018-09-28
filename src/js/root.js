@@ -18,15 +18,13 @@ class Root extends React.Component{
 
   render(){
     return(
-      <div>
+      <div className="routerDiv">
         <BrowserRouter isLogin={this.state.isLogin}>
-          <div>
             <Switch>
               <Route path="/" exact component={Login}></Route>
               <Route path="/index" exact component={Index}></Route>
               <Redirect path="/" component={Login}></Redirect>
             </Switch>
-          </div>
         </BrowserRouter>
 
       </div>

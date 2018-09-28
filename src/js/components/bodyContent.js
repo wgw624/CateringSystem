@@ -5,7 +5,6 @@ import ContentData from './bodyContentData';
 export default class BodyContent extends React.Component{
   render(){
     return(
-
         <ContentData bodyData={'react 入门程序'} />
     )
   }

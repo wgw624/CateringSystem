@@ -42,7 +42,7 @@ export default class Index extends React.Component{
           {title: '提交人',dataIndex: 'submitUser',key: 'submitUser',},
         ]
       this.setState({
-        contentData:<BodyContentData bodyData={'我来自于头部的变化'} dataSource={this.state.ds} columns={this.state.columns}  />
+        contentData:<BodyContentData bodyData={'我的代办'} dataSource={this.state.ds} columns={this.state.columns}  />
       })
     }else if("myWork" == requestId){
       this.setState({

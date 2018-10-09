@@ -10,6 +10,12 @@ export default class BodyContentData extends React.Component{
         columns:props.columns?props.columns:[{title: '姓名2',dataIndex: 'name',key: 'name',}, {title: '年龄',dataIndex: 'age',key: 'age',}, {title: '住址',dataIndex: 'address',key: 'address',}],
       }
   }
+  componentWillReceiveProps(props){
+    this.setState({
+      dataSource:props.dataSource,
+      columns:props.columns
+    })
+  }
   render(){
     const dataSource = this.state.dataSource;
     const columns = this.state.columns;

@@ -8,7 +8,7 @@ export default class Login extends React.Component{
     super(props);
     this.state={
       psd:'',
-      username:'',
+      username:'admin',
     }
     this.handleUsername =this.handleUsername.bind(this);
     this.handlePassword=this.handlePassword.bind(this);
@@ -30,18 +30,29 @@ export default class Login extends React.Component{
     // e.preventDefault();
     // return (<Redirect to="/index" />);
      // this.context.router.history.push('/index');
-     this.props.history.push('/index')
-
+     var url =  "http://localhost:8080/userInfController/login?username="+this.state.username+"&password="+this.state.psd;
+     fetch(url).then(response=>{
+       return response.json();
+     }).then(data=>{
+       if(data.isLogin == true){
+         // this.props.history.push('/index')
+         <Redirect to={'/default'}/>
+       }else{
+         alert("登陆失败")
+       }
+     }).catch(error=>{
+       alert("请求出错")
+     })
   }
 
   render(){
     return(
-      <div class={LoginCss.loginDiv}>
-        <div class={LoginCss.loginForm}>
+      <div className={LoginCss.loginDiv}>
+        <div className={LoginCss.loginForm}>
           <h1 className={LoginCss.loginH1}>Login</h1>
           <form onSubmit={this.handleSubmit}>
           <div className={LoginCss.logInpDiv}>
-            <input type="text" value={this.state.value} onChange={this.handleUsername} placeholder="用户名" className={LoginCss.loginInp} />
+            <input type="text" value={this.state.username} onChange={this.handleUsername} placeholder="用户名" className={LoginCss.loginInp} />
           </div>
           <div className={LoginCss.logInpDiv}>
             <input className={LoginCss.loginInp}  type="password" value={this.state.psd} onChange={this.handlePassword} placeholder="密码" />

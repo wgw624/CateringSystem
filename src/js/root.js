@@ -23,7 +23,7 @@ class Root extends React.Component{
             <Switch>
               <Route path="/" exact component={Login}></Route>
               <Route path="/index" exact component={Index}></Route>
-              <Redirect path="/" component={Login}></Redirect>
+              <Redirect to="/" component={Login}></Redirect>
             </Switch>
         </BrowserRouter>
 

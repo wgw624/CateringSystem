@@ -7,14 +7,17 @@ export default class Login extends React.Component{
   constructor(props){
     super(props);
     this.state={
-      psd:'',
+      psd:'6666',
       username:'admin',
+      isLogin:false,
     }
     this.handleUsername =this.handleUsername.bind(this);
     this.handlePassword=this.handlePassword.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
+componentWillReceiveProps(){
+  alert(213)
+}
   handleUsername(e){
     this.setState({
       username:e.target.value,
@@ -35,22 +38,43 @@ export default class Login extends React.Component{
        return response.json();
      }).then(data=>{
        if(data.isLogin == true){
-         // this.props.history.push('/index')
-         <Redirect to={'/default'}/>
+         this.setState({isLogin:data.isLogin});
        }else{
          alert("登陆失败")
        }
      }).catch(error=>{
-       alert("请求出错")
+       alert("get 请求出错")
      })
   }
+  handleSubmitPost(e){
+     event.preventDefault();
+    var url =  "http://localhost:8080/userInfController/login";
+    fetch(url,{
+      method:'POST',
+      headers:{
+   　　　　"Content-Type": "application/x-www-form-urlencoded"
+ 　　　　 },
+      body:"username=1&password=2",
+    }).then(response=>{
+       return response.json();
+    }).then(data=>{
+      if(data.isLogin){
+        this.setState({isLogin:data.isLogin});
+        this.props.history.push("/index")
+      }else{
+        alert("post 请求登录失败")
+      }
+    }).catch(error=>{
+      alert("post 请求出错")
+    })
 
+  }
   render(){
     return(
       <div className={LoginCss.loginDiv}>
         <div className={LoginCss.loginForm}>
           <h1 className={LoginCss.loginH1}>Login</h1>
-          <form onSubmit={this.handleSubmit}>
+          <form onSubmit={this.handleSubmitPost}>
           <div className={LoginCss.logInpDiv}>
             <input type="text" value={this.state.username} onChange={this.handleUsername} placeholder="用户名" className={LoginCss.loginInp} />
           </div>
@@ -61,7 +85,7 @@ export default class Login extends React.Component{
             <Checkbox className={LoginCss.loginCheck}>记住密码</Checkbox>
           </div>
           <div>
-            <input type="submit" value="Submit" className={LoginCss.submitBtn} />
+             <Button type="primary" onClick={this.handleSubmitPost.bind(this)}>Primary</Button>
           </div>
 
           </form>

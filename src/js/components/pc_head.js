@@ -10,7 +10,8 @@ const MenuItemGroup = Menu.ItemGroup;
 export default class PCHeader extends React.Component{
   state={
     current:'singleWork',
-    isLogin:this.props.isLogin
+    isLogin:this.props.isLogin,
+    showName:sessionStorage.getItem("showName")
   }
   handleClick = (e) => {
       console.log('click ', e);
@@ -30,10 +31,24 @@ onchangeBody(){
   alert(888)
 }
 loginOut(e){
+  alert(123321)
   this.props.history.push('/');
 }
   render(){
     const SubMenu = Menu.SubMenu;
+    const menu = (
+  <Menu>
+    <Menu.Item>
+      <a target="_blank" rel="noopener noreferrer" onClick={this.props.loginFun.bind(this,'modifyPassword')}>修改密码</a>
+    </Menu.Item>
+    <Menu.Item>
+      <a target="_blank" rel="noopener noreferrer" onClick={this.props.loginFun.bind(this,'loginOut')}>退出</a>
+    </Menu.Item>
+    <Menu.Item>
+      <a target="_blank" rel="noopener noreferrer" href="http://www.tmall.com/">天猫</a>
+    </Menu.Item>
+  </Menu>
+);
     return(
       <header>
         <Row>
@@ -75,7 +90,12 @@ loginOut(e){
             </Menu>
           </Col>
           <Col span={2}>
-            <Link to="/" >退出</Link>
+            <Dropdown overlay={menu}>
+             <a className="ant-dropdown-link" href="#">
+               {this.state.showName}<Icon type="down" />
+             </a>
+            </Dropdown>
+
           </Col>
         </Row>
       </header>

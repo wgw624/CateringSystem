@@ -6,6 +6,7 @@ import BodyContent from './bodyContent';
 import BodyContentData from './bodyContentData';
 import IndexContent from './indexContent';
 import {Link,Redirect} from 'react-router-dom';
+import {Form,Icon, Input, Button, Checkbox } from 'antd';
 
 export default class Index extends React.Component{
   constructor(){
@@ -21,6 +22,15 @@ export default class Index extends React.Component{
   }
   changeData(){
     alert(123)
+  }
+  componentDidMount(){
+    //验证用户是否登陆
+    if(sessionStorage.getItem("showName")==undefined || sessionStorage.getItem("showName") ==""){
+      this.props.history.push("/");
+    }
+  }
+  showName(){
+    alert(this.props.location.query.showName)
   }
   onchangeBody(requestId){
 
@@ -72,14 +82,21 @@ export default class Index extends React.Component{
         console.log("error is ",error);
       })
     }
-
   };
-
+  loginFun(requestId){
+    if("loginOut" == requestId){
+      sessionStorage.clear();
+      this.props.history.push("/");
+    }else if("modifyPassword" == requestId){
+      alert("暂未开发")
+    }
+  }
   render(){
     return(
       <div>
-        <PCHeader onchangeBody={this.onchangeBody.bind(this)}/>
+        <PCHeader onchangeBody={this.onchangeBody.bind(this)} loginFun={this.loginFun.bind(this)} />
         {this.state.contentData}
+        <Button type="primary" onClick={this.showName.bind(this)}>当前用户</Button>
         <PCFooter />
       </div>
     )

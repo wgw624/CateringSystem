@@ -7,9 +7,10 @@ export default class Login extends React.Component{
   constructor(props){
     super(props);
     this.state={
-      psd:'6666',
-      username:'admin',
+      psd:'66666',
+      username:'wgw',
       isLogin:false,
+      showName:"wgw",
     }
     this.handleUsername =this.handleUsername.bind(this);
     this.handlePassword=this.handlePassword.bind(this);
@@ -49,20 +50,26 @@ componentWillReceiveProps(){
   handleSubmitPost(e){
      event.preventDefault();
     var url =  "http://localhost:8080/userInfController/login";
+    var username=this.state.username;
+    var password = this.state.psd;
+    var data = "username="+username+"&password="+password;
     fetch(url,{
       method:'POST',
       headers:{
    　　　　"Content-Type": "application/x-www-form-urlencoded"
  　　　　 },
-      body:"username=1&password=2",
+      body:data,
     }).then(response=>{
        return response.json();
     }).then(data=>{
       if(data.isLogin){
         this.setState({isLogin:data.isLogin});
-        this.props.history.push("/index")
+        var showName = data.userInf.showName;
+        sessionStorage.setItem("showName",showName);
+        sessionStorage.setItem("userName",data.userInf.userName);
+        this.props.history.push({pathname:"/index",query:{showName:"weiguangwei"}});
       }else{
-        alert("post 请求登录失败")
+        alert("账号或密码错误")
       }
     }).catch(error=>{
       alert("post 请求出错")

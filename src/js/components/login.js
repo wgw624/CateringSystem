@@ -92,7 +92,7 @@ componentWillReceiveProps(){
             <Checkbox className={LoginCss.loginCheck}>记住密码</Checkbox>
           </div>
           <div>
-             <Button type="primary" onClick={this.handleSubmitPost.bind(this)}>Primary</Button>
+             <Button type="primary" onClick={this.handleSubmitPost.bind(this)}>登录</Button>
           </div>
 
           </form>

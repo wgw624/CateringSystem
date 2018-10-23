@@ -58,7 +58,7 @@ export default class Index extends React.Component{
       this.setState({
         contentData:<IndexContent />
       })
-    }else if("myhadFinished" == requestId){
+    }else if("queryAllUser" == requestId){
       var url = "http://localhost:8080/userInfController/getAllUserInf";
       fetch(url).then(response=>{
         return response.json()

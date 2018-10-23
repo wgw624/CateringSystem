@@ -68,8 +68,26 @@ export default class NewAddUser extends React.Component{
   }
   handleOk = () => {
     this.setState({ loading: true });
-    var url = "http://localhost:8080/roleController/getAllRole";
-    fetch(url).then(response=>{
+    var url = "http://localhost:8080/userInfController/saveUser";
+    var data="sysId=123&userName="+this.state.loginUserName+"&showName="+this.state.showUserName;
+    var data1={
+
+            userName:this.state.loginUserName,
+            showName:this.state.showUserName,
+            userNo:this.state.jobNum,
+            phone:this.state.telePhone,
+            password:this.state.password,
+            order:'45678',
+        }
+
+    fetch(url,{
+      method:"POST",
+      headers:{
+   　　　　//"Content-Type": "application/x-www-form-urlencoded"
+          "Content-Type": "application/json"
+ 　　　　 },
+      body:JSON.stringify(data1),
+    }).then(response=>{
       return response.json();
     }).then(data=>{
 

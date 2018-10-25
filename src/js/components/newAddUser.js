@@ -1,6 +1,8 @@
-import {Modal,Button,Input } from 'antd';
+import {Modal,Button,Input,Radio,Select } from 'antd';
 import React from 'react';
+
 export default class NewAddUser extends React.Component{
+
   constructor(props){
     super(props);
     this.state={
@@ -9,7 +11,8 @@ export default class NewAddUser extends React.Component{
       telePhone:'888',
       jobNum:'3434',
       password:'11',
-      surePassword:'11'
+      surePassword:'11',
+      sex:'男',
     }
   }
   state={
@@ -46,6 +49,11 @@ export default class NewAddUser extends React.Component{
       surePassword:e.target.value,
     })
   }
+  changeSex=(e)=>{
+      this.setState({
+        sex:e.target.value
+      })
+  }
   showModal = () => {
     var url = "http://localhost:8080/roleController/getAllRole";
     fetch(url).then(response=>{
@@ -53,6 +61,7 @@ export default class NewAddUser extends React.Component{
     }).then(data=>{
       for(var i=0;i<data.role.length;i++){
         // alert(data.role[i].name)
+      // this.state.allRoleOpt.push(<Option key={data.role[i].roleId}>{data.role[i].name}</Option>);
       }
 
     })
@@ -71,13 +80,13 @@ export default class NewAddUser extends React.Component{
     var url = "http://localhost:8080/userInfController/saveUser";
     var data="sysId=123&userName="+this.state.loginUserName+"&showName="+this.state.showUserName;
     var data1={
-
             userName:this.state.loginUserName,
             showName:this.state.showUserName,
             userNo:this.state.jobNum,
             phone:this.state.telePhone,
             password:this.state.password,
-            order:'45678',
+            roleId:'45678',
+            sex:this.state.sex,
         }
 
     fetch(url,{
@@ -102,8 +111,19 @@ export default class NewAddUser extends React.Component{
   handleCancel = () => {
     this.setState({ visible: false });
   }
+
+  selectRole(value) {
+    //alert(value)
+    console.log(`selected ${value}`);
+  }
   render(){
     const { visible, loading } = this.state;
+    const RadioGroup = Radio.Group;
+    const Option = Select.Option;
+    const children = [];
+    for (let i = 10; i < 36; i++) {
+      children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
+    }
       return (
         <div>
           <p onClick={this.showModal}>
@@ -127,6 +147,18 @@ export default class NewAddUser extends React.Component{
         </p>
         <p>
             <Input placeholder="显示用户名" value={this.state.showUserName}  onChange={this.showUserName}  />
+        </p>
+        <p>
+          <RadioGroup onChange={this.changeSex.bind(this)} value={this.state.sex}>
+            <Radio value={'男'}>男</Radio>
+            <Radio value={'女'}>女</Radio>
+          </RadioGroup>
+        </p>
+        <p>
+          <Select mode="tags" style={{ width: '100%' }} onChange={this.selectRole.bind(this)} tokenSeparators={[',']}>
+            {children}
+          
+          </Select>,
         </p>
         <p>
             <Input placeholder="电话号码" value={this.state.telePhone}  onChange={this.telePhone}  />

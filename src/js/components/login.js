@@ -49,7 +49,7 @@ componentWillReceiveProps(){
   }
   handleSubmitPost(e){
      event.preventDefault();
-    var url =  "http://localhost:8080/userInfController/saveUser";
+    var url =  "http://localhost:8080/userInfController/login";
     var username=this.state.username;
     var password = this.state.psd;
     var data = "username="+username+"&password="+password;

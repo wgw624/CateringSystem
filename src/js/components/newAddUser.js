@@ -1,8 +1,8 @@
 import {Modal,Button,Input,Radio,Select } from 'antd';
 import React from 'react';
-
+const Option = Select.Option;
+const RadioGroup = Radio.Group;
 export default class NewAddUser extends React.Component{
-
   constructor(props){
     super(props);
     this.state={
@@ -13,6 +13,8 @@ export default class NewAddUser extends React.Component{
       password:'11',
       surePassword:'11',
       sex:'男',
+      selRole:'1',
+      allRoleArr:[],
     }
   }
   state={
@@ -60,8 +62,7 @@ export default class NewAddUser extends React.Component{
       return response.json();
     }).then(data=>{
       for(var i=0;i<data.role.length;i++){
-        // alert(data.role[i].name)
-      // this.state.allRoleOpt.push(<Option key={data.role[i].roleId}>{data.role[i].name}</Option>);
+        this.state.allRoleArr.push(<Option key={data.role[i].roleId}>{data.role[i].name}</Option>);
       }
 
     })
@@ -85,7 +86,7 @@ export default class NewAddUser extends React.Component{
             userNo:this.state.jobNum,
             phone:this.state.telePhone,
             password:this.state.password,
-            roleId:'45678',
+            roleId:this.state.selRole,
             sex:this.state.sex,
         }
 
@@ -112,18 +113,12 @@ export default class NewAddUser extends React.Component{
     this.setState({ visible: false });
   }
 
-  selectRole(value) {
-    //alert(value)
-    console.log(`selected ${value}`);
+  changeRole(value) {// 选择角色变更
+    this.state.selRole = value;
   }
   render(){
     const { visible, loading } = this.state;
-    const RadioGroup = Radio.Group;
-    const Option = Select.Option;
-    const children = [];
-    for (let i = 10; i < 36; i++) {
-      children.push(<Option key={i.toString(36) + i}>{i.toString(36) + i}</Option>);
-    }
+    console.log(this.state.allRoleArr)
       return (
         <div>
           <p onClick={this.showModal}>
@@ -155,10 +150,9 @@ export default class NewAddUser extends React.Component{
           </RadioGroup>
         </p>
         <p>
-          <Select mode="tags" style={{ width: '100%' }} onChange={this.selectRole.bind(this)} tokenSeparators={[',']}>
-            {children}
-          
-          </Select>,
+          <Select mode="multiple" style={{ width: '100%' }} onChange={this.changeRole.bind(this)} value={this.state.selRole} >
+            {this.state.allRoleArr}
+          </Select>
         </p>
         <p>
             <Input placeholder="电话号码" value={this.state.telePhone}  onChange={this.telePhone}  />

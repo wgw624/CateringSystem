@@ -6,21 +6,20 @@ export default class NewAddUser extends React.Component{
   constructor(props){
     super(props);
     this.state={
+      loading:false,
+      visiable:false,
       loginUserName:'ym',
       showUserName:'杨幂',
       telePhone:'888',
       jobNum:'3434',
       password:'11',
       surePassword:'11',
+      roleId:'1',
       sex:'男',
-      selRole:'1',
       allRoleArr:[],
     }
   }
-  state={
-    loading:false,
-    visiable:false,
-  }
+
   loginUserName=(e)=>{
     this.setState({
       loginUserName:e.target.value,
@@ -57,15 +56,16 @@ export default class NewAddUser extends React.Component{
       })
   }
   showModal = () => {
-    var url = "http://localhost:8080/roleController/getAllRole";
-    fetch(url).then(response=>{
-      return response.json();
-    }).then(data=>{
-      for(var i=0;i<data.role.length;i++){
-        this.state.allRoleArr.push(<Option key={data.role[i].roleId}>{data.role[i].name}</Option>);
-      }
-
-    })
+    if(this.state.allRoleArr.length<1){
+      var url = "http://localhost:8080/roleController/getAllRole";
+      fetch(url).then(response=>{
+        return response.json();
+      }).then(data=>{
+        for(var i=0;i<data.role.length;i++){
+          this.state.allRoleArr.push(<Option key={data.role[i].roleId}>{data.role[i].name}</Option>);
+        }
+      })
+    }
     this.setState({
       visible: true,
     });
@@ -86,7 +86,7 @@ export default class NewAddUser extends React.Component{
             userNo:this.state.jobNum,
             phone:this.state.telePhone,
             password:this.state.password,
-            roleId:this.state.selRole,
+            roleId:this.state.roleId,
             sex:this.state.sex,
         }
 
@@ -114,10 +114,11 @@ export default class NewAddUser extends React.Component{
   }
 
   changeRole(value) {// 选择角色变更
-    this.state.selRole = value;
+    //this.state.selRole = value;
+    this.state.roleId = value;
   }
   render(){
-    const { visible, loading } = this.state;
+
     console.log(this.state.allRoleArr)
       return (
         <div>
@@ -125,13 +126,13 @@ export default class NewAddUser extends React.Component{
             {this.props.btnName == undefined ? '新增用户' : this.props.btnName}
           </p>
           <Modal
-            visible={visible}
+            visible={this.state.visible}
             title={this.props.title ==undefined?'弹窗':this.props.title}
             onOk={this.handleOk}
             onCancel={this.handleCancel}
             footer={[
               <Button key="back" onClick={this.handleCancel}>Return</Button>,
-              <Button key="submit" type="primary" loading={loading} onClick={this.handleOk}>
+              <Button key="submit" type="primary" loading={this.state.loading} onClick={this.handleOk}>
                 Submit
               </Button>,
             ]}
@@ -150,7 +151,7 @@ export default class NewAddUser extends React.Component{
           </RadioGroup>
         </p>
         <p>
-          <Select mode="multiple" style={{ width: '100%' }} onChange={this.changeRole.bind(this)} value={this.state.selRole} >
+          <Select mode="multiple" style={{ width: '100%' }} onChange={this.changeRole.bind(this)} >
             {this.state.allRoleArr}
           </Select>
         </p>
@@ -159,9 +160,6 @@ export default class NewAddUser extends React.Component{
         </p>
         <p>
             <Input placeholder="用户工号" value={this.state.jobNum}  onChange={this.jobNum} />
-        </p>
-        <p>
-          <Input placeholder="角色" />
         </p>
         <p>
           <Input placeholder="密码" type="password" value={this.state.password}  onChange={this.password} />

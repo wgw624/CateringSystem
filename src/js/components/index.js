@@ -5,6 +5,7 @@ import PCFooter from './pc_footer';
 import BodyContent from './bodyContent';
 import BodyContentData from './bodyContentData';
 import IndexContent from './indexContent';
+import UserManageCom from './userroleCom/userManager';
 import {Link,Redirect} from 'react-router-dom';
 import {Form,Icon, Input, Button, Checkbox } from 'antd';
 
@@ -55,8 +56,10 @@ export default class Index extends React.Component{
         contentData:<BodyContentData bodyData={'我的代办'} dataSource={this.state.ds} columns={this.state.columns}  />
       })
     }else if("myWork" == requestId){
+      this.props.history.push("/userManage")
+    }else if("userManage" == requestId){
       this.setState({
-        contentData:<IndexContent />
+        contentData:<UserManageCom />
       })
     }else if("queryAllUser" == requestId){
       var url = "http://localhost:8080/userInfController/getAllUserInf";

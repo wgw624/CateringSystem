@@ -5,6 +5,7 @@ import List  from './components/list';
 import PCHeader from './components/pc_head';
 import PCFooter from './components/pc_footer';
 import Login from './components/login';
+import UserManageCom from './components/userroleCom/userManager';
 
 import { BrowserRouter, Route,Link,Redirect,Switch } from 'react-router-dom';
 

@@ -10,6 +10,9 @@ import NewAddRole from './NewAddRole';
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
 export default class PCHeader extends React.Component{
+  constructor(props){
+    super(props);
+  }
   state={
     current:'singleWork',
     isLogin:this.props.isLogin,
@@ -72,6 +75,7 @@ loginOut(e){
                    <Menu.Item key="officeCheck" onClick={this.props.onchangeBody.bind(this,'officeCheck')}>办公厅核稿</Menu.Item>
                  </MenuItemGroup>
                  <MenuItemGroup title="用户信息">
+                 <Menu.Item key="userManage" onClick={this.props.onchangeBody.bind(this,'userManage')}>用户管理</Menu.Item>
                    <Menu.Item key="queryAllUser"><NewAddRole title="新增角色" btnName="新增角色" /></Menu.Item>
                    <Menu.Item key="setting:4"><NewAddUser title="新增用户" btnName="注册用户" /></Menu.Item>
                  </MenuItemGroup>

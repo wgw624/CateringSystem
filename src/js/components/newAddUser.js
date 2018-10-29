@@ -14,7 +14,7 @@ export default class NewAddUser extends React.Component{
       jobNum:'3434',
       password:'11',
       surePassword:'11',
-      roleId:'1',
+      rIds:'1',
       sex:'男',
       allRoleArr:[],
     }
@@ -62,7 +62,7 @@ export default class NewAddUser extends React.Component{
         return response.json();
       }).then(data=>{
         for(var i=0;i<data.role.length;i++){
-          this.state.allRoleArr.push(<Option key={data.role[i].roleId}>{data.role[i].name}</Option>);
+          this.state.allRoleArr.push(<Option key={data.role[i].id}>{data.role[i].name}</Option>);
         }
       })
     }
@@ -86,7 +86,7 @@ export default class NewAddUser extends React.Component{
             userNo:this.state.jobNum,
             phone:this.state.telePhone,
             password:this.state.password,
-            roleId:this.state.roleId,
+            rIds:this.state.rIds,
             sex:this.state.sex,
         }
 
@@ -115,7 +115,7 @@ export default class NewAddUser extends React.Component{
 
   changeRole(value) {// 选择角色变更
     //this.state.selRole = value;
-    this.state.roleId = value;
+    this.state.rIds = value;
   }
   render(){
 

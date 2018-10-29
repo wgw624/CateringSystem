@@ -96,7 +96,6 @@ export default class Index extends React.Component{
       <div>
         <PCHeader onchangeBody={this.onchangeBody.bind(this)} loginFun={this.loginFun.bind(this)} />
         {this.state.contentData}
-        <Button type="primary" onClick={this.showName.bind(this)}>当前用户</Button>
         <PCFooter />
       </div>
     )

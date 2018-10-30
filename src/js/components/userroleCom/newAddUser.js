@@ -119,12 +119,12 @@ export default class NewAddUser extends React.Component{
   }
   render(){
 
-    console.log(this.state.allRoleArr)
+
       return (
         <div>
-          <p onClick={this.showModal}>
+          <span onClick={this.showModal}>
             {this.props.btnName == undefined ? '新增用户' : this.props.btnName}
-          </p>
+          </span>
           <Modal
             visible={this.state.visible}
             title={this.props.title ==undefined?'弹窗':this.props.title}

@@ -1,8 +1,9 @@
 import React from 'react';
-import {Table,Button} from 'antd';
-const ButtonGroup = Button.Group;
+import {Table,Button,Input} from 'antd';
 import NewAddUser from './newAddUser';
 
+const ButtonGroup = Button.Group;
+const Search = Input.Search;
 export default class UserManageCom extends React.Component{
   constructor(props){
     super(props);
@@ -38,13 +39,34 @@ export default class UserManageCom extends React.Component{
       console.log("error is ",error);
     })
   }
+  queryUserByshowName(value){
+    alert(value)
+  }
   render(){
+    var styleCss={
+      btnDivStyle:{
+        paddingRight:20,
+        float:'right',
+        height:38,
+      },
+      blockSpan:{
+        width:'60%',
+        display:'inline-block',
+      },
+      clearFix:{
+        clear:'both',
+      }
+    }
     return(
       <div>
+        <div style={styleCss.btnDivStyle}>
+          <Search placeholder="input search text" onSearch={this.queryUserByshowName.bind(this)} style={{ width: 200,marginRight:20, }} />
+          <Button type="primary">
+            <NewAddUser title="新增用户" btnName="注册用户" />
+          </Button>
+        </div>
+        <div className="clearfix"></div>
         <Table dataSource={this.state.ds} columns={this.state.columns}></Table>
-        <Button type="primary">
-          <NewAddUser title="新增用户" btnName="注册用户" />
-        </Button>
 
       </div>
     )

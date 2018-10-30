@@ -6,6 +6,7 @@ import BodyContent from './bodyContent';
 import BodyContentData from './bodyContentData';
 import IndexContent from './indexContent';
 import UserManageCom from './userroleCom/userManager';
+import RoleManageCom from './userroleCom/roleManager';
 import {Link,Redirect} from 'react-router-dom';
 import {Form,Icon, Input, Button, Checkbox } from 'antd';
 
@@ -61,28 +62,13 @@ export default class Index extends React.Component{
       this.setState({
         contentData:<UserManageCom />
       })
+    }else if('roleManage'==requestId){
+      this.setState({
+        contentData:<RoleManageCom />
+      })
     }else if("queryAllUser" == requestId){
-      var url = "http://localhost:8080/userInfController/getAllUserInf";
-      fetch(url).then(response=>{
-        return response.json()
-      }).then(data=>{
-        this.state.columns=[
-          {title: '姓名',dataIndex: 'showName',key: 'showName',},
-          {title: '性别',dataIndex: 'sex',key: 'sex',},
-          {title: '电话号码',dataIndex: 'phone',key: 'phone',},
-        ]
-        var dataArr = data.data;
-        this.state.ds= new Array();
-        for(var i=0;i<dataArr.length;i++){
-          var colu={showName:dataArr[i].showName,sex:dataArr[i].sex,phone:dataArr[i].phone}
-          this.state.ds[i]=colu;
-        }
-        var dds = this.state.ds;
-        this.setState({
-          contentData:<BodyContentData bodyData={'我的已办'} dataSource={dds} columns={this.state.columns} />
-        })
-      }).catch(error=>{
-        console.log("error is ",error);
+      this.setState({
+        contentData:<RoleManageCom />
       })
     }
   };

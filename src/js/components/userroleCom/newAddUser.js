@@ -14,7 +14,7 @@ export default class NewAddUser extends React.Component{
       jobNum:'3434',
       password:'11',
       surePassword:'11',
-      rIds:'1',
+      rIds:[],
       sex:'男',
       allRoleArr:[],
     }
@@ -70,12 +70,7 @@ export default class NewAddUser extends React.Component{
       visible: true,
     });
   }
-  componentWillMount(){
 
-  }
-  componentDidMount(){
-
-  }
   handleOk = () => {
     this.setState({ loading: true });
     var url = "http://localhost:8080/userInfController/saveUser";
@@ -100,26 +95,21 @@ export default class NewAddUser extends React.Component{
     }).then(response=>{
       return response.json();
     }).then(data=>{
-
+      this.props.reloadAllUser();
+      this.setState({loading:false,visible:false})
     }).catch(error=>{
       alert(error);
     })
-    setTimeout(() => {
-      this.setState({ loading: false, visible: false });
-    }, 3000);
-  }
 
+  }
   handleCancel = () => {
     this.setState({ visible: false });
   }
 
   changeRole(value) {// 选择角色变更
-    //this.state.selRole = value;
     this.state.rIds = value;
   }
   render(){
-
-
       return (
         <div>
           <span onClick={this.showModal}>

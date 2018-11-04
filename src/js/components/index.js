@@ -57,7 +57,7 @@ export default class Index extends React.Component{
         contentData:<BodyContentData bodyData={'我的代办'} dataSource={this.state.ds} columns={this.state.columns}  />
       })
     }else if("myWork" == requestId){
-      this.props.history.push("/userManage")
+      //this.props.history.push("/userManage")
     }else if("userManage" == requestId){
       this.setState({
         contentData:<UserManageCom />

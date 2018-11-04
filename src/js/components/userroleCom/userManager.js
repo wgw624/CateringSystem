@@ -10,9 +10,11 @@ export default class UserManageCom extends React.Component{
     this.state={
       ds:[],
       columns:[],
+      timeStamp:new Date(),
     }
   }
-  componentWillMount(){
+
+  loadAllUser(){
     var url = "http://localhost:8080/userInfController/getAllUserInf";
     fetch(url).then(response=>{
       return response.json()
@@ -28,8 +30,8 @@ export default class UserManageCom extends React.Component{
       for(var i=0;i<dataArr.length;i++){
         var colu={showName:dataArr[i].showName,sex:dataArr[i].sex,phone:dataArr[i].phone,
           opt:<ButtonGroup>
-                <Button type="Normal" icon="delete" />
-                <Button type="Normal" icon="edit" />
+                <Button type="Normal" icon="delete" onClick={this.delBtn.bind(this,dataArr[i].id)} />
+                <Button type="Normal" icon="edit" onClick={this.editBtn.bind(this,dataArr[i].id)}/>
               </ButtonGroup>}
         dsArr[i]=colu;
       }
@@ -39,8 +41,36 @@ export default class UserManageCom extends React.Component{
       console.log("error is ",error);
     })
   }
+  componentDidMount(){
+    this.loadAllUser();
+  }
   queryUserByshowName(value){
     alert(value)
+  }
+  delBtn(id){
+    var url="http://localhost:8080/userInfController/delUserById?id="+id;
+    fetch(url).then(response=>{
+      return response.json();
+    }).then(data=>{
+      alert(data.status)
+      if(data.status ==1){
+        this.loadAllUser();
+      }else{
+        alert(data.msg)
+      }
+    }).catch(error=>{
+      console.log(error);
+    });
+  }
+  editBtn(id){
+    var url="http://localhost:8080/userInfController/getUserById?id="+id;
+    fetch(url).then(response=>{
+      return response.json();
+    }).then(data=>{
+
+    }).catch(error=>{
+      console.log(error);
+    })
   }
   render(){
     var styleCss={
@@ -62,7 +92,7 @@ export default class UserManageCom extends React.Component{
         <div style={styleCss.btnDivStyle}>
           <Search placeholder="input search text" onSearch={this.queryUserByshowName.bind(this)} style={{ width: 200,marginRight:20, }} />
           <Button type="primary">
-            <NewAddUser title="新增用户" btnName="注册用户" />
+            <NewAddUser title="新增用户" btnName="注册用户" reloadAllUser={this.loadAllUser.bind(this)} />
           </Button>
         </div>
         <div className="clearfix"></div>

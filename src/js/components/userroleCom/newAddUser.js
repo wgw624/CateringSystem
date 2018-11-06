@@ -1,13 +1,15 @@
 import {Modal,Button,Input,Radio,Select } from 'antd';
 import React from 'react';
+import propTypes from 'prop-types';
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
 export default class NewAddUser extends React.Component{
   constructor(props){
+    alert("newAdduser constructor ")
     super(props);
     this.state={
       loading:false,
-      visiable:false,
+      visible:false,
       loginUserName:'ym',
       showUserName:'杨幂',
       telePhone:'888',
@@ -19,7 +21,37 @@ export default class NewAddUser extends React.Component{
       allRoleArr:[],
     }
   }
+  getUserInfById(userId){
 
+    var url="http://localhost:8080/userInfController/getUserById?userId="+userId;
+    fetch(url).then(response=>{
+      return response.json();
+    }).then(data=>{
+      if(data.status){
+        alert(data.data.showName)
+        this.setState({
+          visible:this.props.newAddIsShow,
+          loginUserName:data.data.userName,
+          showUserName:data.data.showName,
+          userNo:data.data.userNo,
+          telePhone:data.data.phone,
+          password:data.data.password,
+          //rIds:data.data.rIds,
+          sex:data.data.sex,
+        })
+      }
+    }).catch(error=>{
+      console.log(error);
+    })
+  }
+  componentWillReceiveProps(prop){
+    alert("componentWillReceiveProps"+prop.newAddIsShow+"--11->"+prop.userId+"***")
+    if(prop.userId.length >0){
+      this.getUserInfById(prop.userId);
+    }
+
+
+  }
   loginUserName=(e)=>{
     this.setState({
       loginUserName:e.target.value,
@@ -83,6 +115,7 @@ export default class NewAddUser extends React.Component{
             password:this.state.password,
             rIds:this.state.rIds,
             sex:this.state.sex,
+            id:this.props.id,
         }
 
     fetch(url,{
@@ -109,6 +142,8 @@ export default class NewAddUser extends React.Component{
   changeRole(value) {// 选择角色变更
     this.state.rIds = value;
   }
+
+
   render(){
       return (
         <div>
@@ -165,3 +200,7 @@ export default class NewAddUser extends React.Component{
     }
 
 }
+NewAddUser.defaultProps={
+userId:'',
+newAddIsShow:false,
+};

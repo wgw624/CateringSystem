@@ -7,7 +7,7 @@ export default class NewAddRole extends React.Component{
     super(props);
     this.state={
       loading:false,
-      visiable:false,
+      visiable:this.props.newAddIsShow,
       name:'管理员',
       describe:'管理员权限',
       roleAuth:'角色权限'

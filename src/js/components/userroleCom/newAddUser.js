@@ -21,14 +21,25 @@ export default class NewAddUser extends React.Component{
       allRoleArr:[],
     }
   }
-  getUserInfById(userId){
 
-    var url="http://localhost:8080/userInfController/getUserById?userId="+userId;
+  componentWillReceiveProps(prop){
+    if(prop.isEdit){
+        this.getUserAndAllRoleByUserId(prop.userId);
+    }
+  }
+  getUserAndAllRoleByUserId=(userId)=>{
+    var url="http://localhost:8080/userInfController/getUserAndAllRoleById?userId="+userId;
     fetch(url).then(response=>{
       return response.json();
     }).then(data=>{
+      var allRollArr = data.allRole;
+      this.state.allRoleArr=[];
+      for(var i=0;i<allRollArr.length;i++){
+        var roleName = allRollArr[i].name;
+        var roleId = allRollArr[i].id;
+        this.state.allRoleArr.push(<Option key={roleId}>{roleName}</Option>);
+      }
       if(data.status){
-        alert(data.data.showName)
         this.setState({
           visible:this.props.newAddIsShow,
           loginUserName:data.data.userName,
@@ -36,21 +47,13 @@ export default class NewAddUser extends React.Component{
           userNo:data.data.userNo,
           telePhone:data.data.phone,
           password:data.data.password,
-          //rIds:data.data.rIds,
+          rIds:data.data.rIds,
           sex:data.data.sex,
         })
       }
     }).catch(error=>{
       console.log(error);
     })
-  }
-  componentWillReceiveProps(prop){
-    alert("componentWillReceiveProps"+prop.newAddIsShow+"--11->"+prop.userId+"***")
-    if(prop.userId.length >0){
-      this.getUserInfById(prop.userId);
-    }
-
-
   }
   loginUserName=(e)=>{
     this.setState({
@@ -104,7 +107,6 @@ export default class NewAddUser extends React.Component{
   }
 
   handleOk = () => {
-    this.setState({ loading: true });
     var url = "http://localhost:8080/userInfController/saveUser";
     var data="sysId=123&userName="+this.state.loginUserName+"&showName="+this.state.showUserName;
     var data1={
@@ -115,7 +117,7 @@ export default class NewAddUser extends React.Component{
             password:this.state.password,
             rIds:this.state.rIds,
             sex:this.state.sex,
-            id:this.props.id,
+            id:this.props.userId,
         }
 
     fetch(url,{
@@ -155,6 +157,7 @@ export default class NewAddUser extends React.Component{
             title={this.props.title ==undefined?'弹窗':this.props.title}
             onOk={this.handleOk}
             onCancel={this.handleCancel}
+            destroyOnClose={true}
             footer={[
               <Button key="back" onClick={this.handleCancel}>Return</Button>,
               <Button key="submit" type="primary" loading={this.state.loading} onClick={this.handleOk}>
@@ -176,7 +179,7 @@ export default class NewAddUser extends React.Component{
           </RadioGroup>
         </p>
         <p>
-          <Select mode="multiple" style={{ width: '100%' }} onChange={this.changeRole.bind(this)} >
+          <Select mode="multiple" style={{ width: '100%' }} defaultValue={this.state.rIds} onChange={this.changeRole.bind(this)} >
             {this.state.allRoleArr}
           </Select>
         </p>
@@ -203,4 +206,5 @@ export default class NewAddUser extends React.Component{
 NewAddUser.defaultProps={
 userId:'',
 newAddIsShow:false,
+isEdit:false
 };

@@ -11,8 +11,9 @@ export default class UserManageCom extends React.Component{
       ds:[],
       columns:[],
       timeStamp:new Date(),
-      newAddIsShow:false,
       userId:'',
+      isShow:false,
+      isEdit:false,
     }
   }
 
@@ -21,12 +22,12 @@ export default class UserManageCom extends React.Component{
     fetch(url).then(response=>{
       return response.json()
     }).then(data=>{
-      this.setState({columns:[
+      var cols=[
         {title: '姓名',dataIndex: 'showName',key: 'showName',},
         {title: '性别',dataIndex: 'sex',key: 'sex',},
         {title: '电话号码',dataIndex: 'phone',key: 'phone',},
-        {title: '操作',dataIndex: 'opt',key: 'opt',},
-      ]});
+        {title: '操作',dataIndex: 'opt',key: 'opt',}]
+
       var dataArr = data.data;
       var dsArr = new Array();
       for(var i=0;i<dataArr.length;i++){
@@ -37,7 +38,7 @@ export default class UserManageCom extends React.Component{
               </ButtonGroup>}
         dsArr[i]=colu;
       }
-      this.setState({ds:dsArr});
+      this.setState({ds:dsArr,columns:cols,isShow:false});
 
     }).catch(error=>{
       console.log("error is ",error);
@@ -54,6 +55,7 @@ export default class UserManageCom extends React.Component{
     fetch(url).then(response=>{
       return response.json();
     }).then(data=>{
+      alert(data.status)
       if(data.status ==1){
         this.loadAllUser();
       }else{
@@ -64,16 +66,7 @@ export default class UserManageCom extends React.Component{
     });
   }
   editBtn(id){
-  //  var url="http://localhost:8080/userInfController/getUserById?userId="+id;
-    // fetch(url).then(response=>{
-    //   return response.json();
-    // }).then(data=>{
-    //     alert("查询成功");
-    //     this.setState({newAddIsShow:true,userId:id});
-    // }).catch(error=>{
-    //   console.log(error);
-    // })
-    this.setState({newAddIsShow:true,userId:id});
+    this.setState({isShow:true,userId:id,isEdit:true})
   }
   render(){
     var styleCss={
@@ -93,11 +86,9 @@ export default class UserManageCom extends React.Component{
     return(
       <div>
         <div style={styleCss.btnDivStyle}>
-          <Search placeholder="input search text" onSearch={this.queryUserByshowName.bind(this)}
-            style={{ width: 200,marginRight:20, }} />
+          <Search placeholder="input search text" onSearch={this.queryUserByshowName.bind(this)} style={{ width: 200,marginRight:20, }} />
           <Button type="primary">
-            <NewAddUser title="新增用户" btnName="注册用户" reloadAllUser={this.loadAllUser.bind(this)}
-            newAddIsShow={this.state.newAddIsShow} userId={this.state.userId} />
+            <NewAddUser title="新增用户" isEdit={this.state.isEdit} btnName="注册用户" newAddIsShow={this.state.isShow} userId = {this.state.userId} reloadAllUser={this.loadAllUser.bind(this)} />
           </Button>
         </div>
         <div className="clearfix"></div>

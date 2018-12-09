@@ -7,11 +7,33 @@ export default class NewAddRole extends React.Component{
     super(props);
     this.state={
       loading:false,
-      visiable:this.props.newAddIsShow,
+      visible:this.props.isShow,
       name:'管理员',
       describe:'管理员权限',
       roleAuth:'角色权限'
     }
+  }
+  componentWillReceiveProps(props){
+    if(props.isEdit){
+      this.getRoleById(props.roleId);
+    }
+
+  }
+  getRoleById(roleId){
+    var url="http://localhost:8080/roleController/getRoleById?roleId="+roleId;
+    fetch(url).then(response=>{
+      return response.json();
+    }).then(data=>{
+      var ds = data.data;
+      if(ds!=null || ds!=undefined){
+        this.setState({
+          name:ds.name,
+          describe:ds.describe,
+          visible:this.props.isShow,
+        })
+      }
+
+    })
   }
   showModal = () => {
     this.setState({
@@ -19,7 +41,6 @@ export default class NewAddRole extends React.Component{
     });
   }
   roleName=(e)=>{
-
     this.setState({name:e.target.value})
   }
   roleDesc=(e)=>{
@@ -28,19 +49,13 @@ export default class NewAddRole extends React.Component{
   roleAuth=(e)=>{
     this.setState({roleAuth:e.target.value})
   }
-  componentWillMount(){
-
-  }
-  componentDidMount(){
-
-  }
-
   handleOk = () => {
     this.setState({ loading: true });
     var url = "http://localhost:8080/roleController/saveRole";
     var data1={
             name:this.state.name,
             describe:this.state.describe,
+            id:this.props.roleId,
         }
 
     fetch(url,{
@@ -53,13 +68,13 @@ export default class NewAddRole extends React.Component{
     }).then(response=>{
       return response.json();
     }).then(data=>{
-
+      this.props.reloadAllRole();
     }).catch(error=>{
       alert(error);
     })
-    setTimeout(() => {
-      this.setState({ loading: false, visible: false });
-    }, 3000);
+
+    this.setState({ loading: false, visible: false });
+
   }
 
   handleCancel = () => {
@@ -77,6 +92,7 @@ export default class NewAddRole extends React.Component{
             title={this.props.title ==undefined?'弹窗':this.props.title}
             onOk={this.handleOk}
             onCancel={this.handleCancel}
+            destoryOnClose={true}
             footer={[
               <Button key="back" onClick={this.handleCancel}>Return</Button>,
               <Button key="submit" type="primary" loading={this.state.loading} onClick={this.handleOk}>
@@ -102,4 +118,9 @@ export default class NewAddRole extends React.Component{
       );
     }
 
+}
+NewAddRole.defaultProps={
+  roleId:'',
+  isEdit:false,
+  isShow:false,
 }

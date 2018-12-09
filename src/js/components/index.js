@@ -60,7 +60,7 @@ export default class Index extends React.Component{
       //this.props.history.push("/userManage")
     }else if("userManage" == requestId){
       this.setState({
-        contentData:<UserManageCom />
+        contentData:<UserManageCom timstamp={new Date().toLocaleTimeString()}/>
       })
     }else if('roleManage'==requestId){
       this.setState({

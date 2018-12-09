@@ -5,7 +5,6 @@ const Option = Select.Option;
 const RadioGroup = Radio.Group;
 export default class NewAddUser extends React.Component{
   constructor(props){
-    alert("newAdduser constructor ")
     super(props);
     this.state={
       loading:false,
@@ -24,7 +23,9 @@ export default class NewAddUser extends React.Component{
 
   componentWillReceiveProps(prop){
     if(prop.isEdit){
-        this.getUserAndAllRoleByUserId(prop.userId);
+      this.getUserAndAllRoleByUserId(prop.userId);
+    }else{
+      this.setState({visible:prop.isShow});
     }
   }
   getUserAndAllRoleByUserId=(userId)=>{
@@ -131,14 +132,14 @@ export default class NewAddUser extends React.Component{
       return response.json();
     }).then(data=>{
       this.props.reloadAllUser();
-      this.setState({loading:false,visible:false})
+    //  this.setState({loading:false,visible:false})
     }).catch(error=>{
       alert(error);
     })
 
   }
   handleCancel = () => {
-    this.setState({ visible: false });
+    this.setState({ visible: false});
   }
 
   changeRole(value) {// 选择角色变更

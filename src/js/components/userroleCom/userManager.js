@@ -47,8 +47,13 @@ export default class UserManageCom extends React.Component{
   componentDidMount(){
     this.loadAllUser();
   }
+  componentWillReceiveProps(pros){
+    this.setState({
+      isShow:false
+    })
+  }
   queryUserByshowName(value){
-    alert(value)
+    alert("--queryUserByshowName()--"+value)
   }
   delBtn(id){
     var url="http://localhost:8080/userInfController/delUserById?id="+id;

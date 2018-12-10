@@ -82,8 +82,8 @@ export default class Index extends React.Component{
   }
   render(){
     return(
-      <div>
-        <PCHeader onchangeBody={this.onchangeBody.bind(this)} loginFun={this.loginFun.bind(this)} />
+      <div ref="bodyContent44">
+        <PCHeader onchangeBody={this.onchangeBody.bind(this)} loginFun={this.loginFun.bind(this)}wu />
         {this.state.contentData}
         <PCFooter />
       </div>

@@ -98,14 +98,17 @@ loadAllRole(){
     }
     return(
       <div>
-        <div style={styleCss.btnDivStyle}>
+        <div style={styleCss.btnDivStyle} className="btnDivStyle">
           <Search placeholder="input search text" onSearch={this.queryRoleByshowName.bind(this)} style={{ width: 200,marginRight:20, }} />
           <Button type="primary">
             <NewAddRole title="新增角色" reloadAllRole={this.loadAllRole.bind(this)} btnName="新增" roleId={this.state.id} isEdit={this.state.isEdit} isShow={this.state.addIsShow} />
           </Button>
         </div>
         <div className="clearfix"></div>
-        <Table dataSource={this.state.ds} columns={this.state.columns}></Table>
+        <div className="dataDivStyle">
+          <Table dataSource={this.state.ds} columns={this.state.columns}></Table>
+        </div>
+
       </div>
     )
   }

@@ -8,3 +8,10 @@
 .clearfix{
   clear:both;
 }
+.btnDivStyle{
+  height:38px;
+}
+.dataDivStyle{
+  overflow: auto;
+  height: 400px;
+}

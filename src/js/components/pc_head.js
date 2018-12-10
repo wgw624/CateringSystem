@@ -55,7 +55,7 @@ loginOut(e){
 );
     return(
 
-      <header>
+      <header style={{height:76,}}>
 
         <Row>
           <Col span={4}>

@@ -1,12 +1,17 @@
 import React from 'react';
 import {Table,Button,Input} from 'antd';
 import NewAddUser from './newAddUser';
+import Calculate from '../../common/calculate.js';
+
+import CommonComponentCss from '../../../css/commonCompoent.css';
 
 const ButtonGroup = Button.Group;
 const Search = Input.Search;
 export default class UserManageCom extends React.Component{
   constructor(props){
     super(props);
+    Calculate.calHeight
+    alert("11111"+Calculate.calHeight);
     this.state={
       ds:[],
       columns:[],
@@ -78,7 +83,6 @@ export default class UserManageCom extends React.Component{
       btnDivStyle:{
         paddingRight:20,
         float:'right',
-        height:38,
       },
       blockSpan:{
         width:'60%',
@@ -90,14 +94,17 @@ export default class UserManageCom extends React.Component{
     }
     return(
       <div>
-        <div style={styleCss.btnDivStyle}>
+        <div style={styleCss.btnDivStyle} className="btnDivStyle">
           <Search placeholder="input search text" onSearch={this.queryUserByshowName.bind(this)} style={{ width: 200,marginRight:20, }} />
           <Button type="primary">
             <NewAddUser title="新增用户" isEdit={this.state.isEdit} btnName="注册用户" newAddIsShow={this.state.isShow} userId = {this.state.userId} reloadAllUser={this.loadAllUser.bind(this)} />
           </Button>
         </div>
         <div className="clearfix"></div>
-        <Table dataSource={this.state.ds} columns={this.state.columns}></Table>
+        <div className="dataDivStyle">
+          <Table dataSource={this.state.ds} columns={this.state.columns}></Table>
+        </div>
+
 
       </div>
     )

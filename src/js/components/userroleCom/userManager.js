@@ -1,8 +1,6 @@
 import React from 'react';
 import {Table,Button,Input} from 'antd';
 import NewAddUser from './newAddUser';
-import Calculate from '../../common/calculate.js';
-
 import CommonComponentCss from '../../../css/commonCompoent.css';
 
 const ButtonGroup = Button.Group;
@@ -10,8 +8,6 @@ const Search = Input.Search;
 export default class UserManageCom extends React.Component{
   constructor(props){
     super(props);
-    Calculate.calHeight
-    alert("11111"+Calculate.calHeight);
     this.state={
       ds:[],
       columns:[],
@@ -51,6 +47,7 @@ export default class UserManageCom extends React.Component{
   }
   componentDidMount(){
     this.loadAllUser();
+    Calculate.calHeight();
   }
   componentWillReceiveProps(pros){
     this.setState({

@@ -21,26 +21,8 @@ componentWillReceiveProps(){
   })
 }
 componentDidMount(){
-  var url = "http://localhost:8080/roleController/getAllRole";
-  var columns = new Array();
-  columns.push({title: '角色名',dataIndex: 'name',key: 'name',});
-  columns.push({title: '角色描述',dataIndex: 'describe',key: 'describe',})
-  columns.push({title: '操作',dataIndex: 'opt',key: 'opt',})
-  var ds = new Array();
-  fetch(url).then(response=>{
-    return response.json();
-  }).then(data=>{
-    for(var i=0;i<data.role.length;i++){
-      ds.push({'name':data.role[i].name,'describe':data.role[i].describe,'opt':<ButtonGroup>
-            <Button type="Normal" icon="delete" onClick = {this.delBtn.bind(this,data.role[i].id)} />
-            <Button type="Normal" icon="edit" onClick = {this.editBtn.bind(this,data.role[i].id)} />
-          </ButtonGroup>})
-    }
-    this.setState({
-      ds:ds,
-      columns:columns,
-    })
-  })
+  this.loadAllRole();
+  Calculate.calHeight();
 }
 delBtn=(id)=>{
   var url ="http://localhost:8080/roleController/delRoleById?roleId="+id;
